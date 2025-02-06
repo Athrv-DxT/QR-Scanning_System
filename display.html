@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Display</title>
-    <link rel="stylesheet" href="style.css">
+    <title>QR Display | TEAM ICREATE</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Enter Room Code to Start</h2>
-        <p>Your Room Code: <span id="room-id"></span></p>
+    <div id="setup">
+        <h2>Enter Room Code</h2>
+        <p>Room ID: <span id="room-id"></span></p>
         <button onclick="startDisplay()">Start Display</button>
-
-        <div id="display-container">
-            <h1>TEAM ICREATE WELCOMES</h1>
-            <h2 id="name-display"></h2>
-        </div>
     </div>
+
+    <div id="display-container" >
+        <h1>TEAM ICREATE WELCOMES</h1>
+        <h2 id="name-display"></h2>
+    </div>
+
     <script src="display.js"></script>
 </body>
 </html>

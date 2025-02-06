@@ -1,4 +1,4 @@
-// Generate a random Room Code
+// Generate a random Room Code and display it
 let roomID = generateRoomCode();
 document.getElementById("room-id").innerText = roomID;
 
@@ -7,8 +7,16 @@ function generateRoomCode() {
 }
 
 function startDisplay() {
-    document.getElementById("setup").style.display = "none";
-    document.getElementById("display-container").style.display = "block";
+    let setupElement = document.getElementById("setup");
+    let displayContainer = document.getElementById("display-container");
+
+    if (!setupElement || !displayContainer) {
+        console.error("Required elements are missing from HTML.");
+        return;
+    }
+
+    setupElement.style.display = "none";
+    displayContainer.style.display = "block";
 
     let socket = new WebSocket("wss://qr-scanning-system.onrender.com");
 
