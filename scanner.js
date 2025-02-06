@@ -6,6 +6,7 @@ function connectToRoom() {
         alert("Please enter a Room ID.");
         return;
     }
+
     document.getElementById("connection-form").style.display = "none";
     document.getElementById("scanner-container").style.display = "block";
 
@@ -15,12 +16,14 @@ function connectToRoom() {
 // Start QR Code Scanning
 function startScanning() {
     let scanner = new Html5Qrcode("scanner-preview");
+
     scanner.start(
-        { facingMode: "environment" },  // Use back camera
-        { fps: 10, qrbox: 250 }, 
+        { facingMode: "environment" }, // Use back camera
+        { fps: 10, qrbox: 250 },
         (decodedText) => {
+            console.log("Scanned:", decodedText);
             sendScanData(decodedText);
-            scanner.stop();
+            setTimeout(() => scanner.resume(), 2000); // Restart scanning after sending data
         },
         (error) => console.warn("Scanning error:", error)
     );
@@ -28,15 +31,19 @@ function startScanning() {
 
 // Send scanned data to backend
 async function sendScanData(scannedName) {
-    let response = await fetch("https://qr-scanning-system.onrender.com/scan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ room_id: roomID, name: scannedName })
-    });
+    try {
+        let response = await fetch("https://qr-scanning-system.onrender.com/scan", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ room_id: roomID, name: scannedName })
+        });
 
-    if (response.ok) {
-        alert("Sent: " + scannedName);
-    } else {
-        alert("Failed to send data.");
+        if (response.ok) {
+            console.log("Sent:", scannedName);
+        } else {
+            console.error("Failed to send data.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
     }
 }

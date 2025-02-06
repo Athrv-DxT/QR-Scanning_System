@@ -13,15 +13,20 @@ function startDisplay() {
     let socket = new WebSocket("wss://qr-scanning-system.onrender.com");
 
     socket.onopen = () => {
+        console.log("WebSocket Connected!");
         socket.send(JSON.stringify({ action: "join", room_id: roomID }));
     };
 
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
         if (data.name) {
+            console.log("Received:", data.name);
             typeEffect(data.name);
         }
     };
+
+    socket.onerror = (error) => console.error("WebSocket Error:", error);
+    socket.onclose = () => console.log("WebSocket Closed.");
 }
 
 // Typing effect for displaying names
