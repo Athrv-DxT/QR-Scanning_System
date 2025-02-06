@@ -27,7 +27,7 @@ async function startScanning() {
 // Function to send scanned data to backend
 async function sendScanData(roomID, scannedName) {
     try {
-        let response = await fetch("https://your-backend.onrender.com/scan", {
+        let response = await fetch("https://qr-scanning-system.onrender.com", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ room_id: roomID, name: scannedName })

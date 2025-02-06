@@ -7,7 +7,7 @@ function connectToRoom() {
         return;
     }
 
-    socket = new WebSocket("wss://your-backend.onrender.com/display?room_id=" + roomID);
+    socket = new WebSocket("https://qr-scanning-system.onrender.com" + roomID);
 
     socket.onmessage = function(event) {
         let data = JSON.parse(event.data);
