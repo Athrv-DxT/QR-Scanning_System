@@ -1,6 +1,6 @@
 // for laptop screens
 
-var socket = io("https://your-backend.onrender.com");
+var socket = io("https://qr-scanning-system.onrender.com");
 
 function joinRoom() {
     let roomID = document.getElementById("room").value;
@@ -21,7 +21,7 @@ socket.on("new_scan", function(data) {
 let roomID = "";
 
 function sendToServer(name) {
-    fetch("https://your-backend.onrender.com/scan", {
+    fetch("https://qr-scanning-system.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ room_id: roomID, name: name })
