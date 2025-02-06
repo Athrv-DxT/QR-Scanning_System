@@ -1,24 +1,30 @@
-let socket;
-let roomID = generateRoomCode(); // Generate random 4-digit Room ID
-
+// Generate a random Room Code
+let roomID = generateRoomCode();
 document.getElementById("room-id").innerText = roomID;
 
 function generateRoomCode() {
-    return Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit code
+    return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
 function startDisplay() {
-    socket = new WebSocket("wss://qr-scanning-system.onrender.com/display?room_id=" + roomID);
+    document.getElementById("setup").style.display = "none";
+    document.getElementById("display-container").style.display = "block";
+
+    let socket = new WebSocket("wss://qr-scanning-system.onrender.com");
+
+    socket.onopen = () => {
+        socket.send(JSON.stringify({ action: "join", room_id: roomID }));
+    };
 
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
-        typeEffect(data.name);
+        if (data.name) {
+            typeEffect(data.name);
+        }
     };
-
-    socket.onopen = () => console.log("Connected to WebSocket for Room ID:", roomID);
-    socket.onerror = (error) => console.error("WebSocket Error:", error);
 }
 
+// Typing effect for displaying names
 function typeEffect(name) {
     let display = document.getElementById("name-display");
     display.innerHTML = "";
@@ -33,6 +39,3 @@ function typeEffect(name) {
     }
     typing();
 }
-
-// Start WebSocket connection on page load
-window.onload = startDisplay;

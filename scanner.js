@@ -1,50 +1,42 @@
 let roomID = "";
 
 function connectToRoom() {
-    roomID = document.getElementById("room-id-input").value;
+    roomID = document.getElementById("room-id-input").value.trim();
     if (!roomID) {
         alert("Please enter a Room ID.");
         return;
     }
     document.getElementById("connection-form").style.display = "none";
     document.getElementById("scanner-container").style.display = "block";
+
+    startScanning();
 }
 
-async function startScanning() {
-    if (!roomID) {
-        alert("Please enter a Room ID first.");
-        return;
-    }
-
-    const scanner = new Html5Qrcode("scanner-preview");
-
+// Start QR Code Scanning
+function startScanning() {
+    let scanner = new Html5Qrcode("scanner-preview");
     scanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        async (decodedText) => {
-            console.log("Scanned QR Code:", decodedText);
-            await sendScanData(decodedText);
+        { facingMode: "environment" },  // Use back camera
+        { fps: 10, qrbox: 250 }, 
+        (decodedText) => {
+            sendScanData(decodedText);
             scanner.stop();
         },
-        (error) => console.warn("QR Code scanning error:", error)
+        (error) => console.warn("Scanning error:", error)
     );
 }
 
+// Send scanned data to backend
 async function sendScanData(scannedName) {
-    try {
-        let response = await fetch("https://qr-scanning-system.onrender.com", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ room_id: roomID, name: scannedName })
-        });
+    let response = await fetch("https://qr-scanning-system.onrender.com/scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ room_id: roomID, name: scannedName })
+    });
 
-        if (response.ok) {
-            alert("Scan successful!");
-        } else {
-            alert("Error sending data to the backend.");
-        }
-    } catch (error) {
-        console.error("Network error:", error);
-        alert("Network error while sending data.");
+    if (response.ok) {
+        alert("Sent: " + scannedName);
+    } else {
+        alert("Failed to send data.");
     }
 }
