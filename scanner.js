@@ -1,5 +1,16 @@
+let roomID = "";
+
+function connectToRoom() {
+    roomID = document.getElementById("room-id-input").value;
+    if (!roomID) {
+        alert("Please enter a Room ID.");
+        return;
+    }
+    document.getElementById("connection-form").style.display = "none";
+    document.getElementById("scanner-container").style.display = "block";
+}
+
 async function startScanning() {
-    let roomID = document.getElementById("room-id").value;
     if (!roomID) {
         alert("Please enter a Room ID first.");
         return;
@@ -8,24 +19,18 @@ async function startScanning() {
     const scanner = new Html5Qrcode("scanner-preview");
 
     scanner.start(
-        { facingMode: "environment" }, // Use rear camera
-        {
-            fps: 10,
-            qrbox: { width: 250, height: 250 }
-        },
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
         async (decodedText) => {
             console.log("Scanned QR Code:", decodedText);
-            await sendScanData(roomID, decodedText);
-            scanner.stop(); // Stop scanning after a successful scan
+            await sendScanData(decodedText);
+            scanner.stop();
         },
-        (error) => {
-            console.warn("QR Code scanning error:", error);
-        }
+        (error) => console.warn("QR Code scanning error:", error)
     );
 }
 
-// Function to send scanned data to backend
-async function sendScanData(roomID, scannedName) {
+async function sendScanData(scannedName) {
     try {
         let response = await fetch("https://qr-scanning-system.onrender.com", {
             method: "POST",
