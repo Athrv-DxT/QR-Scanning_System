@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanned Names</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Scanned Names</h2>
+        <input type="text" id="room" placeholder="Enter Room ID">
+        <button onclick="joinRoom()">Connect</button>
+        <p id="name-display">Waiting for scan...</p>
+    </div>
+
+    <script>
+        var socket = io("https://your-backend.onrender.com");
+
+        function joinRoom() {
+            let roomID = document.getElementById("room").value;
+            if (!roomID) {
+                alert("Enter a Room ID first!");
+                return;
+            }
+            socket.emit("join", { room_id: roomID });
+            console.log("Joined room: " + roomID);
+        }
+
+        socket.on("new_scan", function(data) {
+            document.getElementById("name-display").innerText = "Scanned: " + data.name;
+        });
+    </script>
+
+</body>
+</html>
