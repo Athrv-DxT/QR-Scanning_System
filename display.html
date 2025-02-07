@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Display | TEAM ICREATE</title>
+    <title>QR Display</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>  <!-- FIX 1 -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div id="setup">
-        <h2>Enter Room Code</h2>
-        <p>Room ID: <span id="room-id"></span></p>
+        <h1>Generated Room Code: <span id="room-id"></span></h1>
         <button onclick="startDisplay()">Start Display</button>
     </div>
 
@@ -18,6 +19,6 @@
         <h2 id="name-display"></h2>
     </div>
 
-    <script src="display.js"></script>
+    <script src="display.js"></script> 
 </body>
 </html>

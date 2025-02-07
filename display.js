@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return Math.floor(1000 + Math.random() * 9000).toString();
     }
 
-    // Connect to WebSocket using SocketIO
-    let socket = io("https://qr-scanning-system.onrender.com");
-
     window.startDisplay = function () {
         let setupElement = document.getElementById("setup");
         let displayContainer = document.getElementById("display-container");
@@ -23,23 +20,19 @@ document.addEventListener("DOMContentLoaded", function () {
         setupElement.style.display = "none";
         displayContainer.style.display = "block";
 
-        // Join the Room
-        socket.emit("join", { room_id: roomID });
+        let socket = io("wss://qr-scanning-system.onrender.com"); // FIX 3
 
-        socket.on("name", function (data) {
-            if (data.name) {
-                console.log("Received:", data.name);
-                typeEffect(data.name);
-            }
+        socket.on("connect", () => {
+            console.log("WebSocket Connected!");
+            socket.emit("join", { room_id: roomID });
         });
 
-        socket.on("connect_error", (error) => {
-            console.error("WebSocket Connection Error:", error);
+        socket.on("new_scan", function (data) {
+            console.log("Received:", data.name);
+            typeEffect(data.name);
         });
 
-        socket.on("disconnect", () => {
-            console.log("WebSocket Disconnected.");
-        });
+        socket.on("disconnect", () => console.log("WebSocket Disconnected."));
     };
 
     // Typing effect for displaying names
