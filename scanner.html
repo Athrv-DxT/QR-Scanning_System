@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Scanner</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/html5-qrcode"></script> <!-- QR Scanner Library -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>  <!-- FIX 1 -->
+    <script src="https://unpkg.com/html5-qrcode"></script> <!-- QR Code Scanner Library -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Enter Room Code</h2>
+
+    <div id="connection-form">
+        <h1>Enter Room Code</h1>
         <input type="text" id="room-id-input" placeholder="Enter Room ID">
         <button onclick="connectToRoom()">Connect</button>
-
-        <div id="scanner-container">
-            <h2>Scan QR Code</h2>
-            <div id="scanner-preview"></div>
-        </div>
     </div>
-    <script src="scanner.js"></script>
+
+    <div id="scanner-container">
+        <h1>Scan QR Code</h1>
+        <div id="scanner-preview"></div>
+    </div>
+
+    <script src="scanner.js"></script> <!-- FIX 2 -->
 </body>
 </html>
