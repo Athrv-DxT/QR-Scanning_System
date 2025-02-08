@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Generate a random Room Code and display it
     let roomID = generateRoomCode();
     document.getElementById("room-id").innerText = roomID;
 
@@ -10,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
     window.startDisplay = function () {
         let setupElement = document.getElementById("setup");
         let displayContainer = document.getElementById("display-container");
+        let welcomeText = document.getElementById("welcome-text");
 
-        // Ensure elements exist before modifying their styles
         if (!setupElement || !displayContainer) {
             console.error("Error: Required elements not found in the DOM.");
             return;
@@ -19,8 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setupElement.style.display = "none";
         displayContainer.style.display = "block";
+        welcomeText.style.display = "block"; // Show welcome text when Room Code is entered
 
-        let socket = io("wss://qr-scanning-system.onrender.com"); // FIX 3
+        let socket = io("wss://qr-scanning-system.onrender.com");
 
         socket.on("connect", () => {
             console.log("WebSocket Connected!");
@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
         socket.on("disconnect", () => console.log("WebSocket Disconnected."));
     };
 
-    // Typing effect for displaying names
     function typeEffect(name) {
         let display = document.getElementById("name-display");
         display.innerHTML = "";

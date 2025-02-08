@@ -1,0 +1,93 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #121212;
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Connection Form */
+#connection-form {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    max-width: 350px;
+    width: 90%;
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+/* Input Field */
+input {
+    width: 85%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #2a2a2a;
+    color: white;
+    text-align: center;
+}
+
+/* Connect Button */
+button {
+    width: 90%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #6A0DAD;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background-color: #54088d;
+}
+
+/* Scanner Container */
+#scanner-container {
+    display: none;
+    margin-top: 20px;
+}
+
+#scanner-preview {
+    width: 90%;
+    max-width: 320px;
+    height: 320px;
+    background-color: #1e1e1e;
+    border: 2px solid #6A0DAD;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 18px;
+    }
+    input {
+        font-size: 14px;
+        padding: 10px;
+    }
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
