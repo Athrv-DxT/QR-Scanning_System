@@ -65,16 +65,18 @@ button:hover {
 }
 
 #scanner-preview {
-    width: 90%;
-    max-width: 320px;
-    height: 320px;
+    width: 90vw;  /* 90% of the viewport width */
+    max-width: 350px; /* Set a reasonable max width */
+    height: 90vw; /* Keep height equal to width to maintain square shape */
+    max-height: 350px; /* Ensure it doesn't get too large */
     background-color: #1e1e1e;
-    border: 2px solid #6A0DAD;
+    border: 3px solid #6A0DAD;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px auto;
+    overflow: hidden;
 }
 
 /* Responsive Design */
